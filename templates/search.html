@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Поиск фермерских рынков</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mystyle.css') }}">
+</head>
+<body>
+    <h1>Поиск фермерских рынков</h1>
+    <form method="POST" action="{{ url_for('search') }}">
+        <label for="location">Введите название города или штата или Zip код :</label>
+        <input type="text" id="location" name="location" required>
+        <button type="submit">Search</button>
+    </form>
+    {% if markets %}
+    <h2>Результат поиска:</h2>
+    <ul>
+        {% for market in markets %}
+        <li>{{ market.name }} - {{ market.city }}, {{ market.state }} ({{ market.zip_code }})</li>
+         <a href="{{url_for('editMarket', markets_id = market.id )}}">Изменить</a>  
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <a href="{{ url_for('showMarkets') }}">Вернуться к списку рынков</a>
+</body>
+</html>

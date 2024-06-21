@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>  
+<head>
+    <title>Фермерские рынки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mystyle.css') }}">
+</head>
+<body>  
+
+<li><a href = "{{ url_for('search')}}">Поиск рынков</a></li>
+<li><a href = "{{ url_for('register')}}">Регистрация</a></li>
+<li><a href = "{{ url_for('newMarket')}}">Добавить рынок</a></li>
+ <h1>Страница фермерских рынков</h1>
+    <ul>
+        {% for market in markets %}
+             <li> {{ market.name }} - {{ market.city }}, {{ market.state }} ({{ market.zip_code }}) </li>  
+            <a href="{{url_for('editMarket', markets_id = market.id )}}">  
+              Изменить  
+                </a>  
+                <a href="{{url_for('deleteMarket', markets_id = market.id )}}" style="margin-left: 10px;">  
+                  Удалить  
+                </a>  
+                <br>
+             <br>  
+        {% endfor %}
+    </ul>
+    <div>
+        {% if markets.has_prev %}
+            <a href="{{ url_for('showMarkets', page=markets.prev_num) }}">Previous</a>
+        {% endif %}
+        {% if markets.has_next %}
+            <a href="{{ url_for('showMarkets', page=markets.next_num) }}">Next</a>
+        {% endif %}
+    </div>
+</body>  
+</html>
